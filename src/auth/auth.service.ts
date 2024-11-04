@@ -257,7 +257,7 @@ export class AuthService {
         message: `Entering saveOrUpdateToken for ${email}`,
       });
       const today = new Date();
-      today.setSeconds(today.getSeconds() + 20); //kept the refresh token expiry time as 60 secs for testing
+      today.setSeconds(today.getSeconds() + 60); //kept the refresh token expiry time as 60 secs for testing
       const expiryDate: string = today.toISOString();
       await this.RefreshTokenModel.updateOne(
         { email },

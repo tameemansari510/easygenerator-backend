@@ -13,7 +13,14 @@ export class ReadmeService {
       this.logger.log({
         message: `Entering readme`,
       });
-      const res = await this.ReadmeModel.findOne();
+      // The db call is commented which was implemented while dev testing.
+      // Can use the hardcoded content for demo.
+      // This is only for testing the refersh token flow.
+      /* const res = await this.ReadmeModel.findOne(); */
+      const res = {
+        content:
+          'At Easygenerator, we are on a mission to make it easier than ever for anyone to create engaging e-learning – no coding or instructional design background needed.',
+      };
       this.logger.log({
         message: `Exiting readme`,
       });
