@@ -31,6 +31,9 @@
 ## env
 Make sure to create a .env file and place at root level.
 Make sure to have the CONNECTION_STRING, PORT & JWT_SECRET keys.
+CONNECTION_STRING=Youre mongodb connection string.
+PORT=Desired port to run the webservice.
+JWT_SECRET=Your jwt sectret key to generate access tokens.
 
 ```bash
 $ npm install
