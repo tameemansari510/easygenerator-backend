@@ -25,6 +25,8 @@
 ## Description
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A sample application for auth flow (login, signup) which easily generates jwt tokens.
+Can be accessed vis postman as well.
 
 ## Project setup
 
