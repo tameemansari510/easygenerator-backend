@@ -1,7 +1,6 @@
 import { NestFactory, Reflector } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 import { ValidationPipe } from '@nestjs/common';
-import * as fs from 'fs';
 import { ConfigService } from '@nestjs/config';
 import { AuthGuard } from './gaurds/auth.guard';
 import { JwtService } from '@nestjs/jwt';
@@ -10,15 +9,11 @@ import { CustomLoggerService } from './logging/custom-logger';
 import { CustomExceptionFiler } from './filter';
 
 async function bootstrap() {
-  const httpsOptions = {
-    key: fs.readFileSync('./certs/cert.key'),
-    cert: fs.readFileSync('./certs/cert.crt'),
-  };
   const customLoggerService = new CustomLoggerService();
   const app = await NestFactory.create(AppModule, {
-    httpsOptions,
     logger: WinstonModule.createLogger(customLoggerService.createLoggerConfig),
   });
+  app.enableCors();
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -31,7 +26,6 @@ async function bootstrap() {
   const jwtService = app.get(JwtService);
   app.useGlobalGuards(new AuthGuard(jwtService, reflector));
   app.useGlobalFilters(new CustomExceptionFiler());
-  app.enableCors();
   await app.listen(config.get('port'));
 }
 bootstrap();

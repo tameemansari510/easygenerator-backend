@@ -1,4 +1,4 @@
-import { Logger, Module } from '@nestjs/common';
+import { Logger, Module, ValidationPipe } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from '../auth/auth.module';
@@ -8,6 +8,7 @@ import config from '../config/config';
 import { JwtModule } from '@nestjs/jwt';
 import { ReadmeModule } from 'src/readme/readme.module';
 import { CustomExceptionFiler } from 'src/filter';
+import { APP_PIPE } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -30,7 +31,19 @@ import { CustomExceptionFiler } from 'src/filter';
     ReadmeModule,
   ],
   controllers: [AppController],
-  providers: [AppService, Logger, CustomExceptionFiler],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        whitelist: true,
+        forbidNonWhitelisted: true,
+        transform: true,
+      }),
+    },
+    AppService,
+    Logger,
+    CustomExceptionFiler,
+  ],
   exports: [CustomExceptionFiler],
 })
 export class AppModule {}
